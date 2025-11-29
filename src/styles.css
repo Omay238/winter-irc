@@ -1,42 +1,57 @@
 html, body, div {
     width: 100vw;
     margin: 0;
+    background-color: #00072d;
 }
 
 * {
     font-family: sans-serif;
+    color: #a6e1fa;
 }
 
 #head {
-    height: 20vh;
+    height: 128px;
     border-bottom: 1px solid black;
     display: flex;
 }
 
 #head > img {
-    height: 18vh;
-    margin: 1vh;
+    height: 120px;
+    margin: 4px;
 }
 
 #head > h1 {
     display: inline;
     vertical-align: center;
     transform: translateY(25%);
-    margin: 15px;
+    margin: 16px;
 }
 
 #body {
-    height: 70vh;
+    height: calc(100vh - 202px);
     overflow: auto;
 }
 
+#body > span {
+    display: block;
+    height: auto;
+    padding: 5px;
+    border-radius: 5px;
+    width: calc(100% - 34px);
+    margin: 5px 10px;
+    border: 2px solid #0e6ba8;
+    background-color: #001c55;
+}
+
 #foot {
-    height: 5vh;
+    height: 64px;
     border-top: 1px solid black;
 }
 
 #foot > form > input {
-    margin: 0.5vh 0.5vw;
-    font-size: 4vh;
-    width: 98vw;
+    margin: 5px;
+    font-size: 48px;
+    width: calc(100% - 15px);
+    background-color: #001c55;
+    border: transparent;
 }

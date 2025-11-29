@@ -2,12 +2,14 @@ const { invoke } = window.__TAURI__.core;
 const { listen } = window.__TAURI__.event;
 
 window.addEventListener("DOMContentLoaded", () => {
-  invoke("connect_irc", { username: "owomay", realname: "owomay", server: "irc.hackclub.com:6667" });
+  // invoke("connect_irc", { username: "owomay", realname: "owomay", server: "irc.hackclub.com:6667" });
 
   listen("irc-message", (event) => {
-    let message = document.createElement("li");
-    message.innerText = event.payload;
-    document.getElementById("messages").appendChild(message);
+    for (let line of event.payload.trim().split("\r\n")) {
+      let message = document.createElement("span");
+      message.innerText = line;
+      document.getElementById("body").appendChild(message);
+    }
     document.getElementById("body").scrollTop = document.getElementById("body").scrollHeight;
   });
 
