@@ -1,18 +1,18 @@
 const { invoke } = window.__TAURI__.core;
-
-let greetInputEl;
-let greetMsgEl;
-
-async function greet() {
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsgEl.textContent = await invoke("greet", { name: greetInputEl.value });
-}
+const { listen } = window.__TAURI__.event;
 
 window.addEventListener("DOMContentLoaded", () => {
-  greetInputEl = document.querySelector("#greet-input");
-  greetMsgEl = document.querySelector("#greet-msg");
-  document.querySelector("#greet-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    greet();
+  invoke("connect_irc", { username: "owomay", realname: "owomay", server: "irc.hackclub.com:6667" });
+
+  listen("irc-message", (event) => {
+    let message = document.createElement("li");
+    message.innerText = event.payload;
+    document.getElementById("messages").appendChild(message);
   });
+
+  document.getElementById("message").onsubmit = (event) => {
+    event.preventDefault()
+    invoke("send_irc_message", { content: document.getElementById("message_text").value, channel: "#irc-ysws" });
+    document.getElementById("message_text").value = "";
+  }
 });
