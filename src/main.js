@@ -33,6 +33,17 @@ window.addEventListener("DOMContentLoaded", () => {
       for (let line of event.payload.trim().split("\r\n")) {
         let message = document.createElement("span");
 
+        if (line.includes("PRIVMSG")) {
+            const prefixEnd = line.indexOf(" ");
+            const prefix = line.substring(0, prefixEnd);
+            const nickEnd = prefix.indexOf("!");
+            const senderNick = prefix.substring(1, nickEnd);
+            const msgStart = line.indexOf(":", prefixEnd) + 1;
+            const msgContent = line.substring(msgStart);
+            message.style.color = stringToColour(senderNick);
+            line = `<${senderNick}> ${msgContent}`;
+        }
+
         message.innerText = line;
         document.getElementById("body").appendChild(message);
       }
@@ -46,6 +57,20 @@ window.addEventListener("DOMContentLoaded", () => {
       } else if (document.getElementById("message_text").value.startsWith("/nick")) {
         nick = document.getElementById("message_text").value.split(" ")[1];
       }
+
+      let line = document.getElementById("message_text").value;
+      if (!line.startsWith("/")) {
+        let message = document.createElement("span");
+        const prefixEnd = line.indexOf(" ");
+        const msgStart = line.indexOf(":", prefixEnd) + 1;
+        const msgContent = line.substring(msgStart);
+        message.style.color = stringToColour(nick);
+        line = `<${nick}> ${msgContent}`;
+        message.innerText = line;
+        document.getElementById("body").appendChild(message);
+        document.getElementById("body").scrollTop = document.getElementById("body").scrollHeight;
+      }
+
       invoke("send_irc_message", { content: document.getElementById("message_text").value, channel: channel });
       document.getElementById("message_text").value = "";
     }
