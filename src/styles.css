@@ -67,6 +67,32 @@ html, body, div {
     margin: 16px;
 }
 
+#channels {
+    width: min-content;
+    height: 128px;
+    display: flex;
+    background-color: #001c55;
+    font-size: 24px;
+}
+
+#channels > input[type="radio"] {
+    display: none;
+}
+
+#channels > label {
+    border-radius: 8px 8px 0 0;
+    background: #00072d;
+    margin-top: 92px;
+    margin-left: 4px;
+    padding: 4px;
+    width: max-content;
+}
+
+#channels > label.active {
+    background: #0e6ba8;
+    color: #001c55;
+}
+
 #body {
     height: calc(100vh - 202px);
     overflow: auto;
@@ -86,7 +112,6 @@ html, body, div {
 
 #foot {
     height: 64px;
-    border-top: 1px solid black;
 }
 
 #foot > form > input {

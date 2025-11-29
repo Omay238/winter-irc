@@ -42,12 +42,12 @@ async fn connect_irc(
 async fn send_irc_message(
     state: tauri::State<'_, IRCState>,
     content: String,
-    channel: Option<String>
+    channel: String
 ) -> Result<(), String> {
     let mut client = state.client.lock().await;
 
     if let Some(cli) = client.as_mut() {
-        cli.send_user_message(content, channel.clone())
+        cli.send_user_message(content, Some(channel))
             .await;
         Ok(())
     } else {

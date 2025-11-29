@@ -18,12 +18,19 @@ let name = "";
 let nick = "";
 let channel = "";
 
+function updateActiveStates() {
+  for (let el of document.querySelectorAll("label")) {
+    el.className = document.getElementById(el.htmlFor).checked ? "active" : "";
+  }
+}
+
 window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("channels").onchange = updateActiveStates;
   document.getElementById("setup_form").onsubmit = (ev) => {
-    ev.preventDefault()
+    ev.preventDefault();
     document.getElementById("setup").style.display = "none";
     document.getElementById("message_text").disabled = false;
-    name = document.getElementById("setup_nick").value
+    name = document.getElementById("setup_nick").value;
     nick = name;
     invoke("connect_irc", {
       username: name,
@@ -53,12 +60,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
     document.getElementById("message").onsubmit = (event) => {
-      event.preventDefault()
-      if (document.getElementById("message_text").value.startsWith("/join")) {
-        channel = document.getElementById("message_text").value.split(" ")[1];
-      } else if (document.getElementById("message_text").value.startsWith("/nick")) {
-        nick = document.getElementById("message_text").value.split(" ")[1];
-      }
+      event.preventDefault();
 
       let line = document.getElementById("message_text").value;
       if (!line.startsWith("/")) {
@@ -73,7 +75,42 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("body").scrollTop = document.getElementById("body").scrollHeight;
       }
 
-      invoke("send_irc_message", { content: document.getElementById("message_text").value, channel: channel });
+      if (document.querySelector("input[name=channel]:checked") === null) {
+        channel = "";
+      } else {
+        channel = document.querySelector("input[name=channel]:checked").value;
+      }
+
+      if (document.getElementById("message_text").value.startsWith("/join")) {
+        channel = document.getElementById("message_text").value.split(" ")[1];
+        let radio = document.createElement("input");
+        radio.type = "radio";
+        radio.name = "channel";
+        radio.value = document.getElementById("message_text").value.split(" ")[1];
+        radio.id = document.getElementById("message_text").value.split(" ")[1];
+        radio.checked = true;
+        let label = document.createElement("label");
+        label.htmlFor = document.getElementById("message_text").value.split(" ")[1];
+        label.innerText = document.getElementById("message_text").value.split(" ")[1];
+        document.getElementById("channels").appendChild(radio);
+        document.getElementById("channels").appendChild(label);
+        updateActiveStates();
+      } else if (document.getElementById("message_text").value.startsWith("/part")) {
+        if (document.getElementById("message_text").value.split(" ").length === 1) {
+          document.querySelector("label[for=\"" + document.querySelector("input[name=channel]:checked").id + "\"]").remove();
+          document.querySelector("input[name=channel]:checked").remove();
+        } else {
+          document.querySelector("label[for=\"" + document.getElementById("message_text").value.split(" ")[1] + "\"]").remove();
+          document.querySelector("input[name=channel]:checked").remove();
+        }
+      } else if (document.getElementById("message_text").value.startsWith("/nick")) {
+        nick = document.getElementById("message_text").value.split(" ")[1];
+      }
+
+      invoke("send_irc_message", {
+        content: document.getElementById("message_text").value,
+        channel: channel
+      });
       document.getElementById("message_text").value = "";
     }
   }
