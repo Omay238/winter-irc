@@ -8,6 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
     let message = document.createElement("li");
     message.innerText = event.payload;
     document.getElementById("messages").appendChild(message);
+    document.getElementById("body").scrollTop = document.getElementById("body").scrollHeight;
   });
 
   document.getElementById("message").onsubmit = (event) => {
