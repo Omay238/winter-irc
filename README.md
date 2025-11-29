@@ -1,7 +1,6 @@
-# Tauri + Vanilla
+# winter-irc
+###### a winter themed irc client
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.
-
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+## about
+made for siege week 9 with tauri and a library i wrote for the irc ysws that zrl is doing. anyways, i don't expect to
+get very close to the time, but with css - you never know. anyways, enjoy i suppose.
