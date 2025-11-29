@@ -4,15 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" href="styles.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Winter IRC</title>
+    <title>winter irc</title>
     <script type="module" src="/main.js" defer></script>
   </head>
 
   <body>
-    <ul id="messages"></ul>
-    <form id="message">
-      <input id="message_text">
-      <button id="send" type="submit">send</button>
-    </form>
+    <div id="head">
+      <img src="assets/icon.png" alt="winter irc logo">
+      <h1>winter irc</h1>
+    </div>
+    <div id="body">
+      <ul id="messages"></ul>
+    </div>
+    <div id="foot">
+      <form id="message">
+        <input id="message_text" autocorrect="off" autocomplete="off" autocapitalize="none">
+      </form>
+    </div>
   </body>
 </html>

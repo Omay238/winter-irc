@@ -1,0 +1,42 @@
+html, body, div {
+    width: 100vw;
+    margin: 0;
+}
+
+* {
+    font-family: sans-serif;
+}
+
+#head {
+    height: 20vh;
+    border-bottom: 1px solid black;
+    display: flex;
+}
+
+#head > img {
+    height: 18vh;
+    margin: 1vh;
+}
+
+#head > h1 {
+    display: inline;
+    vertical-align: center;
+    transform: translateY(25%);
+    margin: 15px;
+}
+
+#body {
+    height: 70vh;
+    overflow: auto;
+}
+
+#foot {
+    height: 5vh;
+    border-top: 1px solid black;
+}
+
+#foot > form > input {
+    margin: 0.5vh 0.5vw;
+    font-size: 4vh;
+    width: 98vw;
+}
