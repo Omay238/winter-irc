@@ -10,11 +10,13 @@
 
   <body>
     <div id="setup">
-        <form id="setup_form">
-            <input id="setup_nick" placeholder="nickname" autocorrect="off" autocomplete="off" autocapitalize="none">
-            <input id="setup_server" placeholder="server" autocorrect="off" autocomplete="off" autocapitalize="none">
-            <button type="submit">connect</button>
-        </form>
+      <form id="setup_form">
+        <input id="setup_nick" placeholder="nickname" autocorrect="off" autocomplete="off" autocapitalize="none">
+        <br>
+        <input id="setup_server" placeholder="server:port" autocorrect="off" autocomplete="off" autocapitalize="none">
+        <br>
+        <button type="submit">connect</button>
+      </form>
     </div>
 
     <div id="head">
@@ -24,7 +26,7 @@
     <div id="body"></div>
     <div id="foot">
       <form id="message">
-        <input id="message_text" autocorrect="off" autocomplete="off" autocapitalize="none">
+        <input id="message_text" autocorrect="off" autocomplete="off" autocapitalize="none" disabled>
       </form>
     </div>
   </body>

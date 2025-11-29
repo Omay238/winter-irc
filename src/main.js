@@ -21,6 +21,8 @@ let channel = "";
 window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("setup_form").onsubmit = (ev) => {
     ev.preventDefault()
+    document.getElementById("setup").style.display = "none";
+    document.getElementById("message_text").disabled = false;
     name = document.getElementById("setup_nick").value
     nick = name;
     invoke("connect_irc", {
