@@ -9,14 +9,19 @@
   </head>
 
   <body>
+    <div id="setup">
+        <form id="setup_form">
+            <input id="setup_nick" placeholder="nickname" autocorrect="off" autocomplete="off" autocapitalize="none">
+            <input id="setup_server" placeholder="server" autocorrect="off" autocomplete="off" autocapitalize="none">
+            <button type="submit">connect</button>
+        </form>
+    </div>
+
     <div id="head">
       <img src="assets/icon.png" alt="winter irc logo">
       <h1>winter irc</h1>
     </div>
-    <div id="body">
-      <span>message</span>
-      <span>long message long message long message long message long message long message long message long message long message long message long message long message long message long message long message</span>
-    </div>
+    <div id="body"></div>
     <div id="foot">
       <form id="message">
         <input id="message_text" autocorrect="off" autocomplete="off" autocapitalize="none">
