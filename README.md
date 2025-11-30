@@ -1,5 +1,3 @@
-
-https://github.com/user-attachments/assets/d124e530-cad0-400f-bb41-7169dffbc6d0
 # winter-irc
 ###### a winter themed irc client
 
