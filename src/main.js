@@ -25,31 +25,45 @@ function updateActiveStates() {
     el.className = document.getElementById(el.htmlFor).checked ? "active" : "";
   }
 
-
+  for (let line of channel_messages[channel] || []) {
+    addMessage(line, false);
+  }
 }
 
-function addMessage(line) {
+function addMessage(rawLine, add = true) {
+  let line = rawLine;
   let message = document.createElement("span");
 
   if (line.includes("PRIVMSG")) {
     const prefixEnd = line.indexOf(" ");
-    const prefix = line.substring(0, prefixEnd);
+    const prefix = line.substring(1, prefixEnd);
     const nickEnd = prefix.indexOf("!");
-    const senderNick = prefix.substring(1, nickEnd);
+    const senderNick = prefix.substring(0, nickEnd);
+
     const msgStart = line.indexOf(":", prefixEnd) + 1;
     const msgContent = line.substring(msgStart);
-    const chan = line.substring(line.indexOf("PRIVMSG") + 8, line.indexOf(" :", prefixEnd));
 
-    channel_messages[chan] = channel_messages[chan] || [];
-    channel_messages[chan].push(line);
+    const chan = line.substring(
+        line.indexOf("PRIVMSG") + 8,
+        line.indexOf(" :", prefixEnd)
+    ).trim();
+
+    if (add) {
+      channel_messages[chan] = channel_messages[chan] || [];
+      channel_messages[chan].push(rawLine);
+    }
 
     message.style.color = stringToColour(senderNick);
     line = `<${senderNick}> ${msgContent}`;
   }
 
-  message.innerText = line;
-  document.getElementById("body").appendChild(message);
-  document.getElementById("body").scrollTop = document.getElementById("body").scrollHeight;
+  if (channel === "" || rawLine.includes(channel)) {
+    message.innerText = line;
+    document.getElementById("body").appendChild(message);
+  }
+
+  const body = document.getElementById("body");
+  body.scrollTop = body.scrollHeight;
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -83,6 +97,11 @@ window.addEventListener("DOMContentLoaded", () => {
         channel = document.querySelector("input[name=channel]:checked").value;
       }
 
+      invoke("send_irc_message", {
+        content: line,
+        channel: channel
+      });
+
       if (line.startsWith("/join")) {
         channel = line.split(" ")[1];
         let radio = document.createElement("input");
@@ -105,6 +124,8 @@ window.addEventListener("DOMContentLoaded", () => {
           document.querySelector("label[for=\"" + line.split(" ")[1] + "\"]").remove();
           document.querySelector("input[name=channel]:checked").remove();
         }
+        channel = "";
+        updateActiveStates();
       } else if (line.startsWith("/nick")) {
         nick = line.split(" ")[1];
       }
@@ -113,10 +134,6 @@ window.addEventListener("DOMContentLoaded", () => {
         addMessage(":" + nick + "!" + name + "@x PRIVMSG " + channel + " :" + line);
       }
 
-      invoke("send_irc_message", {
-        content: line,
-        channel: channel
-      });
       document.getElementById("message_text").value = "";
     }
   }
