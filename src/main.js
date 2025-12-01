@@ -132,6 +132,8 @@ window.addEventListener("DOMContentLoaded", () => {
         updateActiveStates();
       } else if (line.startsWith("/nick")) {
         nick = line.split(" ")[1];
+      } else if (line.startsWith("/quit")) {
+        invoke("quit");
       }
 
       if (!line.startsWith("/")) {

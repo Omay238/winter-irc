@@ -61,6 +61,11 @@ async fn stop_irc(state: tauri::State<'_, IRCState>) -> Result<(), String> {
     Ok(())
 }
 
+#[tauri::command]
+fn quit(app: tauri::AppHandle) {
+    app.exit(0);
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -72,7 +77,8 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             connect_irc,
             send_irc_message,
-            stop_irc
+            stop_irc,
+            quit
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
