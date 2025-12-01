@@ -22,8 +22,8 @@ animation-duration: ${dur}s;
 const createSnow = (num) => {
     const snowContent = ['&#10052', '&#10053', '&#10054']
     const snowContainer = document.getElementById("snower");
-    for (var i = num; i > 0; i--) {
-        var snow = document.createElement("div");
+    for (let i = num; i > 0; i--) {
+        let snow = document.createElement("div");
         snow.className = "snow";
         snow.style.cssText = getRandomStyles();
         snow.innerHTML = snowContent[random(2)]

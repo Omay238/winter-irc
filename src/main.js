@@ -23,6 +23,10 @@ let channel_messages = {}
 function updateActiveStates() {
   for (let el of document.querySelectorAll("label")) {
     el.className = document.getElementById(el.htmlFor).checked ? "active" : "";
+    if (document.getElementById(el.htmlFor).checked) {
+      channel = el.htmlFor;
+      addMessage("Viewing: " + el.htmlFor, false);
+    }
   }
 
   for (let line of channel_messages[channel] || []) {
@@ -57,7 +61,7 @@ function addMessage(rawLine, add = true) {
     line = `<${senderNick}> ${msgContent}`;
   }
 
-  if (channel === "" || rawLine.includes(channel)) {
+  if (channel === "" || rawLine.includes(channel) || !rawLine.includes("#")) {
     message.innerText = line;
     document.getElementById("body").appendChild(message);
   }
