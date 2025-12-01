@@ -32,5 +32,12 @@ const createSnow = (num) => {
 }
 
 window.addEventListener("load", () => {
-    createSnow(30)
+    createSnow(30);
+});
+
+window.addEventListener("resize", () => {
+    for (let child of document.getElementById("snower").children) {
+        child.remove();
+    }
+    createSnow(30);
 });
